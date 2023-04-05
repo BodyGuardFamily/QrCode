@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QrWifi.Models;
 using System.Diagnostics;
+using System.Linq;
+using QRCoder;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace QrWifi.Controllers
 {
@@ -15,6 +21,17 @@ namespace QrWifi.Controllers
 
         public IActionResult Index()
         {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode("The text which should be encoded.", QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+            using (MemoryStream ms = new MemoryStream()) { 
+                using (Bitmap qrCodeImage = qrCode.GetGraphic(20))
+                {
+                    qrCodeImage.Save(ms,ImageFormat.Png);
+                    ViewBag.QRcode = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
+
             return View();
         }
 
