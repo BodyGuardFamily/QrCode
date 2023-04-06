@@ -11,6 +11,8 @@ using Shouldly;
 using static QRCoder.PayloadGenerator;
 using System.ComponentModel;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 
 //library we used were shouldly and QRcode
@@ -36,6 +38,7 @@ namespace QrWifi.Controllers
             
             //to determine if hidessis is on or off
             bool hideSSid;
+            string imgpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/robot.png");
 
             //determine if the user picked wep or wpa
             if (model.auth == "WEP")
@@ -67,7 +70,8 @@ namespace QrWifi.Controllers
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(generator, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
 
-                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black,false))
+/*                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, false))*/                
+                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, (Bitmap)Bitmap.FromFile(imgpath)))
                 {
                     qrCodeImage.Save(ms, ImageFormat.Png);
                     ViewBag.QRcode = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
@@ -83,6 +87,5 @@ namespace QrWifi.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         //hello test
-
     }
 }

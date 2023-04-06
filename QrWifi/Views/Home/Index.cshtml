@@ -11,12 +11,12 @@
     @*to change the website to privacy.cshtml when submit the info*@
 @using (Html.BeginForm("Privacy", "Home", FormMethod.Post))
 {
-    //to get network name
+    @*to get network name*@
     <label>Network Name:</label>
     @Html.TextBoxFor(model => model.ssid, new {autocomplete="off", name = "ssid"})
     <p> </p>
 
-    //to get the network password
+    @*to get the network password*@
     <label>Network Password:</label>
     @Html.PasswordFor(model => model.password, new {autocomplete="off", name = "password", id="userPassword"})
     <input type="checkbox" onclick="myFunction()">

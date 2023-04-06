@@ -31,3 +31,9 @@ body {
     height: auto;
     margin: auto;
 } 
+
+.test {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
