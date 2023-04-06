@@ -6,3 +6,53 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@model QrWifi.Models.qrCodeModel
+
+    @*to change the website to privacy.cshtml when submit the info*@
+@using (Html.BeginForm("Privacy", "Home", FormMethod.Post))
+{
+    //to get network name
+    <label>Network Name:</label>
+    @Html.TextBoxFor(model => model.ssid, new {autocomplete="off", name = "ssid"})
+    <p> </p>
+
+    //to get the network password
+    <label>Network Password:</label>
+    @Html.PasswordFor(model => model.password, new {autocomplete="off", name = "password", id="userPassword"})
+    <input type="checkbox" onclick="myFunction()">
+    <label>Show Password</label>
+    <p> </p>
+
+    //to let the use pick its a wep or wpa/wpa connection
+    <label for="auth">Which authentication is your wifi:</label>
+    <select name="auth" id="auth">
+    <option value="model => model.auth">WEP</option>
+    <option value="model => model.auth">WPA/WPA2</option>
+    </select>
+    <p> </p>
+    
+    //to determine if the network is hidden
+    <label>Is the Network hidden:</label>
+    <select name="Is SSID Hidden" id="hiddenSSID">
+    <option value="model => model.hiddenSSID">true</option>
+    <option value="model => model.hiddenSSID">false</option>
+    </select>
+    <p> </p>
+
+    <input type="submit" value="Submit">
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("userPassword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+}
+
+
+
+

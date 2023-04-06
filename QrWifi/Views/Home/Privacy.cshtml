@@ -1,6 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Qr Code";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    @*this will display the QRcode*@
+    @model QrWifi.Models.qrCodeModel
+    @if (ViewBag.QRcode != null)
+    {   
+        <img src="@ViewBag.QRcode" style="width:1000px;Height:700px;" />
+    }
+</div>
 
-<p>Use this page to detail your site's privacy policy.</p>
