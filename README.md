@@ -10,7 +10,7 @@ The 2 major library that helped us:\
 QrCode - (https://github.com/codebude/QRCoder)\
 Shouldly - (https://github.com/shouldly/shouldly)
 
-Final Product:
+V1.0:
 
 ![Screenshot one](https://user-images.githubusercontent.com/37791942/230431309-f86d8750-ba78-4a52-8a23-f036e269025a.png)
 ![Screenshot two](https://user-images.githubusercontent.com/37791942/230431584-1faa829a-b659-4567-af0c-c56598aade34.png)
