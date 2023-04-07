@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="QRCoder" Version="1.4.3" />
+    <None Include="wwwroot\images\robot.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="QRCoder" Version="1.4.1" />
+    <PackageReference Include="Shouldly" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

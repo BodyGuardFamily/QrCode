@@ -6,3 +6,48 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@model QrWifi.Models.qrCodeModel
+
+@using (Html.BeginForm("Privacy", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="ssid">Network Name:</label>
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete="off", name = "ssid" })
+    </div>
+
+    <div class="form-group">
+        <label for="password">Network Password:</label>
+        <div class="input-group">
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete="off", name = "password", id="userPassword" })
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="auth">Which authentication is your wifi:</label>
+        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth" })
+    </div>
+
+    <div class="form-group">
+        <label for="hiddenSSID">Is the Network hidden:</label>
+        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID" })
+    </div>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("userPassword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+}
