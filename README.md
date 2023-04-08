@@ -7,8 +7,9 @@ The user will need to determine if they use WEP or WPA/WPA2.\
 The user will need to determin if the the wifi is hidden or not.
 
 The 2 major library that helped us:\
-QrCode - (https://github.com/codebude/QRCoder)\
-Shouldly - (https://github.com/shouldly/shouldly)
+QrCode - https://github.com/codebude/QRCoder
+\
+Shouldly - https://github.com/shouldly/shouldly
 
 V1.0:
 
