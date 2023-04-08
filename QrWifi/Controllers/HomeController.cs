@@ -29,7 +29,8 @@ namespace QrWifi.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new qrCodeModel();
+            return View(model);
         }
         //we needed to put everything in privacy because we were getting null values in index since there was no info getting grabbed
         public IActionResult Privacy(qrCodeModel model)
