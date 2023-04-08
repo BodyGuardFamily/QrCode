@@ -13,13 +13,13 @@
 {
     <div class="form-group">
         <label for="ssid">Network Name:</label>
-        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete="off", name = "ssid" })
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete="off", name = "ssid", @required  = "required"})
     </div>
 
     <div class="form-group">
         <label for="password">Network Password:</label>
         <div class="input-group">
-            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete="off", name = "password", id="userPassword" })
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete="off", name = "password", id="userPassword", @required  = "required"})
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
             </div>
@@ -28,12 +28,12 @@
 
     <div class="form-group">
         <label for="auth">Which authentication is your wifi:</label>
-        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth" })
+        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required  = "required" })
     </div>
 
     <div class="form-group">
         <label for="hiddenSSID">Is the Network hidden:</label>
-        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID" })
+        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required  = "required"})
     </div>
 
     <div class="form-group text-center">
