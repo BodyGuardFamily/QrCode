@@ -71,7 +71,7 @@ namespace QrWifi.Controllers
                 QRCode qrCode = new QRCode(qrCodeData);
 
 /*                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, false))*/                
-                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, (Bitmap)Bitmap.FromFile(imgpath)))
+                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, model.bgColor, model.fgColor, (Bitmap)Bitmap.FromFile(imgpath)))
                 {
                     qrCodeImage.Save(ms, ImageFormat.Png);
                     ViewBag.QRcode = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());

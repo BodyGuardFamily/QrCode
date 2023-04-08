@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace QrWifi.Models
 {
@@ -16,5 +17,8 @@ namespace QrWifi.Models
         //to get and set if the ssid is hidden
         public string hiddenSSID { get; set; } = default!;
 
+        public Color bgColor { get; set; } = default!;
+
+        public Color fgColor { get; set; } = default!;
     }
 }

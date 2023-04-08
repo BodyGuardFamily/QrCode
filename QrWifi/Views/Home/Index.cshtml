@@ -36,6 +36,20 @@
         @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID",@required = "required" })
     </div>
 
+    <div>
+        <label>Please dont use similar color as the phone wont be able to scan it:</label>
+    </div>
+
+    <div class="form-group">
+        <label for="bg-color">Background Color:</label>
+        <input type="color" id="bg-color" name="bgColor" value=model.bgcolor/>
+    </div>
+
+    <div class="form-group">
+        <label for="fg-color">Foreground Color:</label>
+        <input type="color" id="fg-color" name="fgcolor" value=model.fgcolor/>
+    </div >
+
     <div class="form-group text-center">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
