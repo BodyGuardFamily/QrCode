@@ -28,5 +28,8 @@ namespace QrWifi.Models
         {
             return $"#{fgColor.R:X2}{fgColor.G:X2}{fgColor.B:X2}";
         }
+
+        //
+        public IFormFile Imgpath { get; set; }
     }
 }

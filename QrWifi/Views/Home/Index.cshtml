@@ -3,23 +3,22 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to QrWifi</h1>
 </div>
 
 @model QrWifi.Models.qrCodeModel
 
-@using (Html.BeginForm("Privacy", "Home", FormMethod.Post))
+@using (Html.BeginForm("Privacy", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         <label for="ssid">Network Name:</label>
-        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete="off", name = "ssid", @required = "required" })
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid", @required = "required" })
     </div>
 
     <div class="form-group">
         <label for="password">Network Password:</label>
         <div class="input-group">
-            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete="off", name = "password", id="userPassword",@required = "required" })
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword", @required = "required" })
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
             </div>
@@ -28,40 +27,47 @@
 
     <div class="form-group">
         <label for="auth">Which authentication is your wifi:</label>
-        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth",@required = "required" })
+        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required" })
     </div>
 
     <div class="form-group">
         <label for="hiddenSSID">Is the Network hidden:</label>
-        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID",@required = "required" })
+        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required = "required" })
     </div>
 
-    <div>
-        <label>Please dont use similar color as the phone wont be able to scan it:</label>
-    </div>
+    <details>
+        <summary>Advance Features</summary>
+        
+        <div>
+            <label>Please don't use similar color as the phone won't be able to scan it:</label>
+        </div>
 
-    <div class="form-group">
-        <label for="bg-color">Background Color:</label>
-        <input type="color" id="bg-color" name="bgColor" value=model.bgcolor/>
-    </div>
+        <div class="form-group">
+            <label for="bg-color">Background Color:</label>
+            <input type="color" id="bg-color" name="bgColor" value="@Model.bgColor" />
+        </div>
 
-    <div class="form-group">
-        <label for="fg-color">Foreground Color:</label>
-        <input type="color" id="fg-color" name="fgColor" value="@Model.GetFgColorHex()" />
-    </div>
+        <div class="form-group">
+            <label for="fg-color">Foreground Color:</label>
+            <input type="color" id="fg-color" name="fgColor" value="@Model.GetFgColorHex()" />
+        </div>
 
-    <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+        <div class="form-group">
+            <label asp-for="Imgpath" class="control-label"></label>
+            <input asp-for="Imgpath" type="file" class="form-control" />
+        </div>
+    </details>
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("userPassword");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        }
-    </script>
+    <button type="submit" class="btn btn-primary">Generate QR Code</button>
 }
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("userPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
