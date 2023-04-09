@@ -11,21 +11,6 @@
     }
 </div>
 
-@section Scripts {
-    <script>
-        function resizeQRCode() {
-            var qrCode = document.getElementById("qr-code");
-            var qrContainer = qrCode.parentElement;
-            var qrContainerWidth = qrContainer.clientWidth;
-            qrCode.style.maxWidth = qrContainerWidth + "px";
-        }
-
-        // Call resizeQRCode() when the page loads and whenever the window resizes
-        window.addEventListener("load", resizeQRCode);
-        window.addEventListener("resize", resizeQRCode);
-    </script>
-}
-
 <style>
     #qr-code {
         width: 100%;
@@ -34,3 +19,10 @@
         margin: 0 auto;
     }
 </style>
+
+<div class="text-center">
+    @if (ViewBag.QRcode != null)
+    {
+        <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
+    }
+</div>

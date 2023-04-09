@@ -25,16 +25,21 @@ namespace QrWifi.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index(qrCodeModel model)
+        public IActionResult Index(IFormCollection form, qrCodeModel model)
         {
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Privacy(qrCodeModel model)
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult Submit(IFormCollection form, qrCodeModel model)
         {
             Run(model);
-            return View(model);
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

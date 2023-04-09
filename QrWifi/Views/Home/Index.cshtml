@@ -8,7 +8,7 @@
 
 @model QrWifi.Models.qrCodeModel
 
-@using (Html.BeginForm("Privacy", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         <label for="ssid">Network Name:</label>
@@ -44,21 +44,34 @@
 
         <div class="form-group">
             <label for="bg-color">Background Color:</label>
-            <input type="color" id="bg-color" name="bgColor" value="@Model.bgColor" />
+            <input type="color" id="bg-color" name="bgColor" value="@Model?.bgColor ?? " #ffffff"" />
         </div>
+
 
         <div class="form-group">
             <label for="fg-color">Foreground Color:</label>
-            <input type="color" id="fg-color" name="fgColor" value="@Model.GetFgColorHex()" />
+            @if (Model != null) {
+                <input type="color" id="fg-color" name="fgColor" value="@Model.GetFgColorHex()" />
+            } else {
+                <input type="color" id="fg-color" name="fgColor" value="#ffffff" />
+            }
         </div>
 
         <div class="form-group">
             <label asp-for="Imgpath" class="control-label"></label>
             <input asp-for="Imgpath" type="file" class="form-control" />
         </div>
+
     </details>
 
     <button type="submit" class="btn btn-primary">Generate QR Code</button>
+
+    <div class="text-center">
+        @if (ViewBag.QRcode != null)
+        {
+            <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
+        }
+    </div>
 }
 
 <script>
@@ -71,3 +84,37 @@
         }
     }
 </script>
+
+<script>
+    // Hide the QR code container initially
+    $('#qr-code-container').hide();
+
+    // Handle the form submission
+    $('form').submit(function (event) {
+        event.preventDefault();
+
+        // Get the form data and submit it via AJAX
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GenerateQRCode")',
+            data: formData,
+            success: function () {
+                // Show the QR code container and scroll to it
+                $('#qr-code-container').show();
+                $('html, body').animate({
+                    scrollTop: $('#qr-code-container').offset().top
+                }, 500);
+            }
+        });
+    });
+</script>
+
+<style>
+    #qr-code {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
