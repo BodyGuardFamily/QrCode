@@ -6,9 +6,10 @@ The user will need to put their Wifi password.\
 The user will need to determine if they use WEP or WPA/WPA2.\
 The user will need to determine if the the wifi is hidden or not.
 
-added advanced features\ 
+Added advanced features.\
+ 
 user can change color of the qr code.\
-user can change the image to their own image.\
+user can change the image to their own image.
 
 The 2 major library that helped us:\
 QrCode - https://github.com/codebude/QRCoder
