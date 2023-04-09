@@ -4,7 +4,11 @@ The point of this website is to let user make a QR code for their wifi. So that 
 The user need to be to enter there Wifi name.\
 The user will need to put their Wifi password.\
 The user will need to determine if they use WEP or WPA/WPA2.\
-The user will need to determin if the the wifi is hidden or not.
+The user will need to determine if the the wifi is hidden or not.
+
+added advanced features\ 
+user can change color of the qr code.\
+user can change the image to their own image.\
 
 The 2 major library that helped us:\
 QrCode - https://github.com/codebude/QRCoder
