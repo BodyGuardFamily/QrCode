@@ -13,11 +13,17 @@ using System.ComponentModel;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Reflection.Metadata;
+using System.Net;
+using System.Windows.Input;
+
+
 //test
 
 //library we used were shouldly and QRcode
 namespace QrWifi.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -35,15 +41,16 @@ namespace QrWifi.Controllers
         public IActionResult Privacy(qrCodeModel model)
         {
             PayloadGenerator.WiFi.Authentication authmode;
-            
+
             //to determine if hidessis is on or off
             bool hideSSid;
+            
             string imgpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/robot.png");
 
             //determine if the user picked wep or wpa
             if (model.auth == "WEP")
             {
-                authmode = PayloadGenerator.WiFi.Authentication.WEP; 
+                authmode = PayloadGenerator.WiFi.Authentication.WEP;
             }
             else
             {
@@ -51,7 +58,7 @@ namespace QrWifi.Controllers
             }
 
             //to determine if the ssid is hidden or not
-            if(model.hiddenSSID == "true")
+            if (model.hiddenSSID == "true")
             {
                 hideSSid = true;
             }
@@ -70,7 +77,7 @@ namespace QrWifi.Controllers
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(generator, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
 
-/*                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, false))*/                
+/*                using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, false))      */         
                 using (Bitmap qrCodeImage = qrCode.GetGraphic(60, Color.DeepPink, Color.Black, (Bitmap)Bitmap.FromFile(imgpath)))
                 {
                     qrCodeImage.Save(ms, ImageFormat.Png);

@@ -37,3 +37,11 @@ body {
     flex-direction:row;
     justify-content:space-evenly;
 }
+
+.BeforeIcon {
+    padding-right:5px;
+}
+
+.AfterIcon {
+    padding-right: 10px;
+}

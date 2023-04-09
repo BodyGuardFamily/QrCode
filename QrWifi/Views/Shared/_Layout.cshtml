@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - QrWifi</title>
+    <title>@ViewData["Title"] - QrWiFi</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QrWifi.styles.css" asp-append-version="true" />
@@ -12,7 +12,11 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QrWifi</a>
+                <i class="BeforeIcon"></i>
+                <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/000000/external-qr-code-social-media-ui-tanah-basah-glyph-tanah-basah.png"/>
+                <!--<a target="_blank" href="https://icons8.com/icon/2v21YBRbFlfU/qr-code">qr code icon by Icons8</a>-->
+                <i class="AfterIcon"></i>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QR Code Generator</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
