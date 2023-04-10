@@ -72,6 +72,12 @@
             <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
         }
     </div>
+
+    <div>
+        <img id="dl-img" src="~/images/robot.png">
+        <button type="button" id="dl-button" class="btn btn-secondary" data-download="dl-img">Download Image</button>
+    </div>
+        
 }
 
 <script>
@@ -89,7 +95,7 @@
 <script>
     // Hide the QR code container initially
     $('#qr-code-container').hide();
-
+    $('#download-image-container').hide();
     // Handle the form submission
     $('form').submit(function (event) {
         event.preventDefault();
@@ -106,10 +112,35 @@
                 $('html, body').animate({
                     scrollTop: $('#qr-code-container').offset().top
                 }, 500);
+
+                $('#save-image-container').show();
+                $('html, body').animate({
+                    scrollTop: $('#download-image-container').offset().bottom
+                }, 500);
             }
         });
     });
 </script>
+
+<script>
+    const downloadLink = document.querySelectorAll("[data-download]");
+    downloadLink.forEach(button => {
+        const id = button.dataset.download;
+        const image = document.getElementById(id);
+        const a = document.createElement("a");
+
+        a.href = image.src;
+        a.download =  "";
+        a.style.display= "none";
+
+        button.addEventListener("click", () => {
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+    });
+</script>
+
 
 <style>
     #qr-code {

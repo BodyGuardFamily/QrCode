@@ -45,3 +45,11 @@ body {
 .AfterIcon {
     padding-right: 6px;
 }
+
+#dl-button {
+    height: 40px;
+    text-align: center;
+    cursor:pointer; 
+    display:flex;
+    background-color:slategrey
+}
