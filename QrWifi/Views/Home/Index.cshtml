@@ -1,25 +1,24 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to QrWifi</h1>
 </div>
 
 @model QrWifi.Models.qrCodeModel
 
-@using (Html.BeginForm("Privacy", "Home", FormMethod.Post))
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         <label for="ssid">Network Name:</label>
-        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete="off", name = "ssid", @required  = "required"})
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid", @required = "required" })
     </div>
 
     <div class="form-group">
         <label for="password">Network Password:</label>
         <div class="input-group">
-            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete="off", name = "password", id="userPassword", @required  = "required"})
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword", @required = "required" })
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
             </div>
@@ -28,26 +27,95 @@
 
     <div class="form-group">
         <label for="auth">Which authentication is your wifi:</label>
-        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required  = "required" })
+        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required" })
     </div>
 
     <div class="form-group">
         <label for="hiddenSSID">Is the Network hidden:</label>
-        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "True", "False" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required  = "required"})
+        @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "Yes", "No" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required = "required" })
     </div>
 
-    <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+    <details>
+        <summary>Advance Features</summary>
+        
+        <div>
+            <label>Please don't use similar color as the phone won't be able to scan it:</label>
+        </div>
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("userPassword");
-            if (x.type === "password") {
-                x.type = "text";
+        <div class="form-group">
+            <label for="bg-color">Background Color:</label>
+            <input type="color" id="bg-color" name="bgColor" value="@Model?.bgColor ?? " #ffffff"" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="fg-color">Foreground Color:</label>
+            @if (Model != null) {
+                <input type="color" id="fg-color" name="fgColor" value="@Model.GetFgColorHex()" />
             } else {
-                x.type = "password";
+                <input type="color" id="fg-color" name="fgColor" value="#ffffff" />
             }
+        </div>
+
+        <div class="form-group" , style="margin-top: 10px;">
+            <label asp-for="Imgpath" class="control-label">Pick a Image to replace the middle picture</label>
+            <input asp-for="Imgpath" type="file" class="form-control" />
+        </div>
+
+    </details>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Generate QR Code</button>
+
+    <div class="text-center">
+        @if (ViewBag.QRcode != null)
+        {
+            <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
         }
-    </script>
+    </div>
 }
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("userPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
+
+<script>
+    // Hide the QR code container initially
+    $('#qr-code-container').hide();
+
+    // Handle the form submission
+    $('form').submit(function (event) {
+        event.preventDefault();
+
+        // Get the form data and submit it via AJAX
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GenerateQRCode")',
+            data: formData,
+            success: function () {
+                // Show the QR code container and scroll to it
+                $('#qr-code-container').show();
+                $('html, body').animate({
+                    scrollTop: $('#qr-code-container').offset().top
+                }, 500);
+            }
+        });
+    });
+</script>
+
+<style>
+    #qr-code {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
