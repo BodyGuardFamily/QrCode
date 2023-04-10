@@ -69,7 +69,7 @@ namespace QrWifi.Controllers
             //to determine if hidessis is on or off
             bool hideSSid;
 
-            if (model.hiddenSSID == "true")
+            if (model.hiddenSSID == "Yes")
             {
                 return hideSSid = true;
             }

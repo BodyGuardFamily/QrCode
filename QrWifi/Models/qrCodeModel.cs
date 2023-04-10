@@ -24,12 +24,13 @@ namespace QrWifi.Models
         //this is set to default white
         public Color fgColor { get; set; } = Color.White;
 
+        //this will set the default color to white
         public string GetFgColorHex()
         {
             return $"#{fgColor.R:X2}{fgColor.G:X2}{fgColor.B:X2}";
         }
 
-        //
-        public IFormFile Imgpath { get; set; }
+        //to get and set the user image
+        public IFormFile Imgpath { get; set; } = default!;
     }
 }
