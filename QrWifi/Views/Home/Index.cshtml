@@ -10,11 +10,13 @@
 
 @using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    //Network Name Textbox
     <div class="form-group">
         <label for="ssid">Network Name:</label>
         @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid", @required = "required" })
     </div>
 
+    //Network Password Textbox
     <div class="form-group">
         <label for="password">Network Password:</label>
         <div class="input-group">
@@ -25,16 +27,19 @@
         </div>
     </div>
 
+    //Authentication Dropdown
     <div class="form-group">
         <label for="auth">Which authentication is your wifi:</label>
         @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required" })
     </div>
 
+    //Network Hidden Dropdown
     <div class="form-group">
         <label for="hiddenSSID">Is the Network hidden:</label>
         @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "Yes", "No" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required = "required" })
     </div>
 
+    //Advanced features - Background Color, Foreground Color, Add Image
     <details>
         <summary>Advanced Features</summary>
         
@@ -42,11 +47,10 @@
             <label>Please don't use similar color as the phone won't be able to scan it:</label>
         </div>
 
-        <div class="form-group">
+        <div class="form-group"> 
             <label for="bg-color">Background Color:</label>
             <input type="color" id="bg-color" name="bgColor" value="@Model?.bgColor ?? " #ffffff"" />
         </div>
-
 
         <div class="form-group">
             <label for="fg-color">Foreground Color:</label>
@@ -64,6 +68,7 @@
 
     </details>
 
+    //Generate QR Code Button
     <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Generate QR Code</button>
 
     <div class="text-center">
@@ -73,6 +78,7 @@
         }
     </div>
 
+    //Download Image Button
     <div>
         <img id="dl-img" src="~/images/robot.png">
         <button type="button" id="dl-button" class="btn btn-secondary" data-download="dl-img">Download Image</button>
@@ -95,7 +101,6 @@
 <script>
     // Hide the QR code container initially
     $('#qr-code-container').hide();
-    $('#download-image-container').hide();
     // Handle the form submission
     $('form').submit(function (event) {
         event.preventDefault();
@@ -113,10 +118,7 @@
                     scrollTop: $('#qr-code-container').offset().top
                 }, 500);
 
-                $('#save-image-container').show();
-                $('html, body').animate({
-                    scrollTop: $('#download-image-container').offset().bottom
-                }, 500);
+             
             }
         });
     });
@@ -126,13 +128,17 @@
     const downloadLink = document.querySelectorAll("[data-download]");
     downloadLink.forEach(button => {
         const id = button.dataset.download;
+        //Grab Image Tag by Id
         const image = document.getElementById(id);
+        //Create Element
         const a = document.createElement("a");
 
+        //Anchor Tag
         a.href = image.src;
         a.download =  "";
         a.style.display= "none";
 
+        //User Click Events
         button.addEventListener("click", () => {
             document.body.appendChild(a);
             a.click();
