@@ -11,8 +11,11 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <a class="navbar-brand">
+                <img src="~/images/robot.png" alt="QrWifi logo" height="150">
+             </a>
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QrWifi</a>
+                <a class="navbar-brand nav-link-QrWifi" asp-area="" asp-controller="Home" asp-action="Index">QrWifi</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,7 +23,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark nav-link-home" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*comment out to hide the Privacy hyberlink*@
                         @*<li class="nav-item">
@@ -50,3 +53,13 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    .nav-link-home {
+        padding-top: 130px;
+    }
+
+    .nav-link-QrWifi {
+        padding-top: 125px;
+    }
+</style>

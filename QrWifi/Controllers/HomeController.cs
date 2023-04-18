@@ -57,9 +57,14 @@ namespace QrWifi.Controllers
             {
                 return authmode = PayloadGenerator.WiFi.Authentication.WEP;
             }
-            else
+            else if (model.auth == "WPA/WPA2")
             {
                 return authmode = PayloadGenerator.WiFi.Authentication.WPA;
+            }
+            else
+            {
+                return authmode = PayloadGenerator.WiFi.Authentication.nopass;
+
             }
         }
 
@@ -80,15 +85,13 @@ namespace QrWifi.Controllers
         }
 
         //this function creates the qr code
-        public QRCode createQR(qrCodeModel model, PayloadGenerator.WiFi.Authentication authmode, bool ssidHidden) 
-        {
-            WiFi generator = new PayloadGenerator.WiFi(model.ssid, model.password, authmode, ssidHidden);
-            generator.ToString();
-
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(generator, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            return qrCode;
+        public QRCode createQR(WiFi generator) 
+        {   
+                generator.ToString();
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(generator, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                return qrCode;
         }
 
         //this function will run if the user picks a picture they want to use and this will display the qr code with the picture
@@ -129,13 +132,24 @@ namespace QrWifi.Controllers
         //this run function is meant to run all the funtions 
         public void Run(qrCodeModel model)
         {
+            QRCode qrCode;
             //determine if the user picked wep or wpa
             PayloadGenerator.WiFi.Authentication authmode = WepOrWPa(model);
 
             //to determine if the ssid is hidden or not
             bool ssidHIDDEN = isSSIDHIDDEN(model);
 
-            QRCode qrCode = createQR(model, authmode, ssidHIDDEN);
+            //this determine if the user isnt using a password or not because of the authentication type their using
+            if (PayloadGenerator.WiFi.Authentication.nopass == authmode)
+            {
+                WiFi generator = new PayloadGenerator.WiFi(model.ssid, "", authmode, ssidHIDDEN);
+                qrCode = createQR(generator);
+            }
+            else
+            {
+                WiFi generator = new PayloadGenerator.WiFi(model.ssid, model.password, authmode, ssidHIDDEN);
+                qrCode = createQR(generator);
+            }
 
             //determine if there is a picture 
             if (model.Imgpath != null && model.Imgpath.Length > 0 && model.Imgpath is IFormFile formFile && formFile.ContentType.StartsWith("image/"))
