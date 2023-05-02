@@ -22,9 +22,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @*to hide the home hyberlink
                         <li class="nav-item">
                             <a class="nav-link text-dark nav-link-home" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        </li>*@
                         @*comment out to hide the Privacy hyberlink*@
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -42,12 +43,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - QrWifi - <a asp-area="" asp-controller="Home"></a>
+            &copy; 2023 - QrWifi<a asp-area="" asp-controller="Home"></a>
             @*comment out to hide the Privacy hyberlink*@
             @*&copy; 2023 - QrWifi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

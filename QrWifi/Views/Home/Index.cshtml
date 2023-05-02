@@ -2,18 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model QrWifi.Models.qrCodeModel
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@model QrWifi.Models.qrCodeModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    <p>This website is for turning your wifi into a qr code so your guest can scan and sign into without asking for the password</p>
+</head>
+<body>
+    @using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         <label for="ssid">Network Name:</label>
-        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid"})
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid", @required = "required"})
     </div>
 
     <div class="form-group" style="margin-top: 20px;">
         <label for="auth">Which authentication is your wifi:</label>
-            @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2", "None" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required", onchange = "togglePasswordInput()" })        
+            @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2", "None" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required"})        
     </div>
 
     <div class="form-group" style="margin-top: 20px;" id="password-input">
@@ -32,18 +41,20 @@
     </div>
 
     <details style ="margin-top: 20px;">
+        @*Makes the some of the features hidden until they hit advance features*@
         <summary>Advance Features</summary>
         
         <div>
             <label>Please don't use similar color as the phone won't be able to scan it:</label>
         </div>
 
+            @*Lets the user change the color on the qr code*@
         <div class="form-group" style="margin-top: 20px;">
             <label for="bg-color">Background Color:</label>
             <input type="color" id="bg-color" name="bgColor" value="@Model?.bgColor ?? " #ffffff"" />
         </div>
 
-
+        @*Lets the user change the color on the qr code*@
         <div class="form-group" style="margin-top: 20px;">
             <label for="fg-color">Foreground Color:</label>
             @if (Model != null) {
@@ -53,6 +64,7 @@
             }
         </div>
 
+        @*Lets the user put their own image into the middle of the qrcode*@
         <div class="form-group" , style="margin-top: 10px;">
             <label asp-for="Imgpath" class="control-label">Pick a Image to replace the middle picture</label>
             <input asp-for="Imgpath" type="file" class="form-control" />
@@ -60,8 +72,10 @@
 
     </details>
 
+    //will be to generate the qr code
     <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Generate QR Code</button>
 
+    //will display the qr code
     <div class="text-center">
         @if (ViewBag.QRcode != null)
         {
@@ -69,7 +83,8 @@
         }
     </div>
 }
-
+</body>
+</html>
 <script>
     //this will show and hide the user password when they click the button
     function myFunction() {
@@ -84,43 +99,32 @@
     // Hide the QR code container initially
     $('#qr-code-container').hide();
 
-    // Handle the form submission
-    $('form').submit(function (event) {
-        event.preventDefault();
-
-        // Get the form data and submit it via AJAX
-        var formData = $(this).serialize();
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("GenerateQRCode")',
-            data: formData,
-            success: function () {
-                // Show the QR code container and scroll to it
-                $('#qr-code-container').show();
-                $('html, body').animate({
-                    scrollTop: $('#qr-code-container').offset().top
-                }, 500);
+    $(document).ready(function () {
+        // Define the togglePasswordInput() function
+        function togglePasswordInput() {
+            var auth = $('#auth').val();
+            // If auth = "None" then it will hide the #password-input element
+            if (auth == "None") {
+                $('#password-input').hide();
             }
+            // If auth = "WEP" or "WPA/WPA2" then it will show the #password-input element
+            else {
+                $('#password-input').show();
+            }
+        }
+
+        // Hide the password input initially
+        $('#password-input').hide();
+
+        // Trigger the togglePasswordInput() function to set up the event listener
+        togglePasswordInput();
+
+        // Trigger the togglePasswordInput() function on change of the #auth element
+        $('#auth').on('change', function () {
+            togglePasswordInput();
         });
     });
 
-    //id auth
-    function togglePasswordInput() {
-        var auth = $('#auth').val();
-        //if auth = none then it will hide the id = password-input 
-        if (auth === "None") {
-            $('#password-input').hide();
-        //if auth != none  then it will not hide the id = password-input
-        } else {
-            $('#password-input').show();
-        }
-    }
-
-    function hideElement() {
-        var element = document.getElementById("password-input");
-        element.style.display = "none";
-    }
-    window.onload = hideElement;
 </script>
 
 <style>
