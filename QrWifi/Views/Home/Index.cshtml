@@ -41,10 +41,10 @@
 
     //Advanced features - Background Color, Foreground Color, Add Image
     <details>
-        <summary>Advanced Features</summary>
+        <summary id="AF">Advanced Features</summary>
         
         <div>
-            <label>Please don't use similar color as the phone won't be able to scan it:</label>
+            <label id="AF">Please don't use similar color as the phone won't be able to scan it:</label>
         </div>
 
         <div class="form-group"> 
@@ -62,27 +62,28 @@
         </div>
 
         <div class="form-group" , style="margin-top: 10px;">
-            <label asp-for="Imgpath" class="control-label">Pick a Image to replace the middle picture</label>
+            <label asp-for="Imgpath" class="control-label">Pick an image to replace the middle picture</label>
             <input asp-for="Imgpath" type="file" class="form-control" />
         </div>
 
     </details>
 
-    //Generate QR Code Button
+    //Generate QR Code Button and Download Image Button
     <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Generate QR Code</button>
 
     <div class="text-center">
         @if (ViewBag.QRcode != null)
         {
-            <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
+            <img id="dl-img" src="@ViewBag.QRcode"/>
+            <button type="button" id="dl-button" class="btn btn-secondary" data-download="dl-img">Download Image</button>
         }
     </div>
-
+@*
     //Download Image Button
     <div>
-        <img id="dl-img" src="~/images/robot.png">
+        <img id="dl-img" src="@ViewBag.QRcode">
         <button type="button" id="dl-button" class="btn btn-secondary" data-download="dl-img">Download Image</button>
-    </div>
+    </div>*@
         
 }
 

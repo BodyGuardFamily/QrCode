@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    overflow: hidden;
 }
 
 @media (min-width: 768px) {
@@ -53,3 +54,11 @@ body {
     display:flex;
     background-color:slategrey
 }
+
+#dl-img {
+    max-width: 70%;
+    max-height: 80%;
+    float: right;
+    margin-left: 20px;
+}
+
