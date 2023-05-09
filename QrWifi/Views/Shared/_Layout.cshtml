@@ -24,7 +24,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark nav-link-home" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*comment out to hide the Privacy hyberlink*@
                         @*<li class="nav-item">
@@ -42,7 +42,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container" style="background:white;">
             &copy; 2023 - QrWifi - <a asp-area="" asp-controller="Home"></a>
             @*comment out to hide the Privacy hyberlink*@
             @*&copy; 2023 - QrWifi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
@@ -53,4 +53,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+
+</html>s
