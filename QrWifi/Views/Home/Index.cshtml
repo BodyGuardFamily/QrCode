@@ -2,40 +2,49 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="text-center">
+    <h1 class="display-4">Welcome to QrWifi</h1>
+</div>
+
 @model QrWifi.Models.qrCodeModel
 
 @using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    //Network Name Textbox
     <div class="form-group">
         <label for="ssid">Network Name:</label>
-        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid"})
+        @Html.TextBoxFor(model => model.ssid, new { @class = "form-control", autocomplete = "off", name = "ssid", @required = "required" })
     </div>
 
-    <div class="form-group" style="margin-top: 20px;">
-        <label for="auth">Which authentication is your wifi:</label>
-            @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2", "None" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required", onchange = "togglePasswordInput()" })        
-    </div>
-
-    <div class="form-group" style="margin-top: 20px;" id="password-input">
+    //Network Password Textbox
+    <div class="form-group">
         <label for="password">Network Password:</label>
         <div class="input-group">
-            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword" })
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword", @required = "required" })
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
             </div>
         </div>
     </div>
 
-    <div class="form-group" style="margin-top: 20px;">
+    //Authentication Dropdown
+    <div class="form-group">
+        <label for="auth">Which authentication is your wifi:</label>
+        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required" })
+    </div>
+
+    //Network Hidden Dropdown
+    <div class="form-group">
         <label for="hiddenSSID">Is the Network hidden:</label>
         @Html.DropDownListFor(model => model.hiddenSSID, new SelectList(new[] { "Yes", "No" }), "Select an option", new { @class = "form-control", id = "hiddenSSID", @required = "required" })
     </div>
 
-    <details style ="margin-top: 20px;">
+    //Advanced features - Background Color, Foreground Color, Add Image
+    <details>
         <summary>Advanced Features</summary>
         
         <div>
-            <label>Please don't use similar color as the phone won't be able to scan it:</label>
+            <label>Please don't use a similar color as the phone won't be able to scan the QR code:</label>
         </div>
 
         <div class="form-group" style="margin-top: 20px;">
@@ -53,21 +62,23 @@
             }
         </div>
 
-        <div class="form-group" , style="margin-top: 10px;">
-            <label asp-for="Imgpath" class="control-label">Pick a Image to replace the middle picture</label>
+        <div class="form-group" style="margin-top: 10px;">
+            <label asp-for="Imgpath" class="control-label">Pick an image to replace the middle picture</label>
             <input asp-for="Imgpath" type="file" class="form-control" />
         </div>
 
     </details>
 
-    <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Generate QR Code</button>
-
-    <div class="text-center">
-        @if (ViewBag.QRcode != null)
-        {
-            <img src="@ViewBag.QRcode" style="max-width:100%; height:auto; max-height:80vh;" />
-        }
+    //Generate QR Code Button and Download Image Button
+    <div class="button-container">
+        <button type="submit" id="qr-button" class="btn btn-primary">Generate QR Code</button>
+            @if (ViewBag.QRcode != null)
+            {
+                <img id="dl-img" src="@ViewBag.QRcode" />
+                <button type="button" id="dl-button" class="btn btn-secondary" data-download="dl-img">Download Image</button>
+            }
     </div>
+
 }
 
 <script>
@@ -100,6 +111,7 @@
                 $('html, body').animate({
                     scrollTop: $('#qr-code-container').offset().top
                 }, 500);
+
             }
         });
     });
@@ -123,11 +135,26 @@
     window.onload = hideElement;
 </script>
 
-<style>
-    #qr-code {
-        width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-</style>
+<script>
+    const downloadLink = document.querySelectorAll("[data-download]");
+    downloadLink.forEach(button => {
+        const id = button.dataset.download;
+        //Grab Image Tag by Id
+        const image = document.getElementById(id);
+        //Create Element
+        const a = document.createElement("a");
+
+        //Anchor Tag
+        a.href = image.src;
+        a.download = "";
+        a.style.display = "none";
+
+        //User Click Events
+        button.addEventListener("click", () => {
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+    });
+</script>
+

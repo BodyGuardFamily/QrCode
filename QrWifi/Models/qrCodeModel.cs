@@ -22,7 +22,7 @@ namespace QrWifi.Models
         public Color bgColor { get; set; } = default!;
 
         //this is set to default white
-        public Color fgColor { get; set; } = Color.White;
+        public Color fgColor { get; set; } = Color.FromArgb(250, 148, 148);
 
         //this will set the default color to white
         public string GetFgColorHex()
