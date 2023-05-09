@@ -17,10 +17,10 @@
     </div>
 
     //Network Password Textbox
-    <div class="form-group">
+    <div class="form-group" id="password-input">
         <label for="password">Network Password:</label>
         <div class="input-group">
-            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword", @required = "required" })
+            @Html.PasswordFor(model => model.password, new { @class = "form-control", autocomplete = "off", name = "password", id = "userPassword" })
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="myFunction()">Show</button>
             </div>
@@ -29,8 +29,8 @@
 
     //Authentication Dropdown
     <div class="form-group">
-        <label for="auth">Which authentication is your wifi:</label>
-        @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required" })
+      <label for="auth">Which authentication is your wifi:</label>
+            @Html.DropDownListFor(model => model.auth, new SelectList(new[] { "WEP", "WPA/WPA2", "None" }), "Select Authentication", new { @class = "form-control", id = "auth", @required = "required", onchange = "togglePasswordInput()" })        
     </div>
 
     //Network Hidden Dropdown
